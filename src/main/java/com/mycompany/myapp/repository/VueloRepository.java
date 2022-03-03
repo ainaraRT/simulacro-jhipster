@@ -1,5 +1,6 @@
 package com.mycompany.myapp.repository;
 
+import com.mycompany.myapp.domain.Piloto;
 import com.mycompany.myapp.domain.Vuelo;
 import java.util.List;
 import java.util.Optional;
@@ -41,4 +42,10 @@ public interface VueloRepository extends VueloRepositoryWithBagRelationships, Jp
         "select vuelo from Vuelo vuelo left join fetch vuelo.origen left join fetch vuelo.destino left join fetch vuelo.avion left join fetch vuelo.piloto where vuelo.id =:id"
     )
     Optional<Vuelo> findOneWithToOneRelationships(@Param("id") Long id);
+
+    // Métrica 2. Para un piloto, del que se conoce su DNI, listado (paginado) de vuelos en los que ha participado.
+    Page<Vuelo> findByPiloto_Dni(String dni, Pageable pageable);
+
+    // Métrica 3. Número total de vuelos de un tripulante, por DNI
+    long countByTripulantes_Dni(String dni);
 }
